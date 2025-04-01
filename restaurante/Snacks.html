@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Snacks</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="cate.js"></script>
+</head>
+<body>
+    <header>
+        <ul>
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="pizza.html">Categoría</a></li>
+            <li><a href="Carrito.html">Carrito de Compras</a></li>
+            <li><a href="DevsPage.html">Nuestro Equipo</a></li>
+        </ul>
+    </header>
+
+    <div class="main-content">
+        
+
+        <nav>
+            <button onclick="window.location.href='pizza.html'">Pizza</button>
+            <button onclick="window.location.href='hamburguesa.html'">Hamburguesa</button>
+            <button onclick="window.location.href='perro-caliente.html'">Perro Caliente</button>
+            <button onclick="window.location.href='snacks.html'">Snacks</button>
+            <button onclick="window.location.href='bebidas.html'">Bebidas</button>
+        </nav>
+
+        <section class="menu-items">
+            <h2>Elige tu Snack</h2>
+            <div class="menu-grid">
+                <div class="menu-item" data-nombre="Papas Fritas" data-precio="2.50">
+                    <img src="papas.jpg" alt="Papas Fritas">
+                    <h3>Papas Fritas</h3>
+                    <p>$2.50</p>
+                    <p>25 Disponibles</p>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="menu-item" data-nombre="Nachos con Queso" data-precio="3.50">
+                    <img src="nachos.jpg" alt="Nachos con Queso">
+                    <h3>Nachos con Queso</h3>
+                    <p>$3.50</p>
+                    <p>15 Disponibles</p>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="menu-item" data-nombre="Alitas BBQ" data-precio="5.00">
+                    <img src="alitas.jpg" alt="Alitas BBQ">
+                    <h3>Alitas BBQ</h3>
+                    <p>$5.00</p>
+                    <p>10 Disponibles</p>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="cart">
+            <h2>Carrito de Compras</h2>
+            <div class="cart-items"></div>
+            <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
+            <p><strong>Tax (10%):</strong> <span id="tax">$0.00</span></p>
+            <p><strong>Total:</strong> <span id="total">$0.00</span></p>
+            <button class="print-bill">Imprimir Factura</button>
+        </section>
+    </div>
+</body>
+</html>

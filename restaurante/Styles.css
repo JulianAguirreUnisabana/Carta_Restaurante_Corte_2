@@ -1,213 +1,212 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
 }
- 
+
 .main-content {
-    flex-grow: 1;
-    padding: 20px;
+  flex-grow: 1;
+  padding: 20px;
 }
 /* Estilos para la barra de navegación con lista <ul> */
-ul{
-    margin:0px;
-    display: flex;
-    justify-content:space-evenly;
-    background: linear-gradient(135deg, #ff4d4d, #ff944d);
-    padding: 12px 24px;
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    list-style: none;
+ul {
+  margin: 0px;
+  display: flex;
+  justify-content: space-evenly;
+  background: linear-gradient(135deg, #ff4d4d, #ff944d);
+  padding: 12px 24px;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  list-style: none;
 }
- 
+
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
- 
+
 header input {
-    padding: 10px;
-    width: 300px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
- 
+
 nav {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
- 
+
 nav button {
-    padding: 10px 20px;
-    margin: 0 5px;
-    border: none;
-    background: #e74c3c;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  background: #e74c3c;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
- 
+
 nav button:hover {
-    background: #c0392b;
+  background: #c0392b;
 }
- 
+
 /* Menú de productos */
 .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
- 
+
 .menu-item {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    text-align: center;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
- 
+
 .menu-item img {
-    width: 100%;
-    border-radius: 10px;
+  width: 100%;
+  border-radius: 10px;
 }
- 
+
 .menu-item h3 {
-    margin: 10px 0;
-    color: #333;
+  margin: 10px 0;
+  color: #333;
 }
- 
+
 .menu-item p {
-    margin: 5px 0;
-    color: #777;
+  margin: 5px 0;
+  color: #777;
 }
- 
+
 .contador {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
 }
- 
+
 .contador button {
-    border: none;
-    padding: 5px 10px;
-    background: #3498db;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 0 5px;
+  border: none;
+  padding: 5px 10px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 5px;
 }
- 
+
 .agregar-carrito {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
- 
+
 .agregar-carrito:hover {
-    background: #219150;
+  background: #219150;
 }
- 
- 
-img{
-    width: 30px;
-    height: 225px;
+
+img {
+  width: 30px;
+  height: 225px;
 }
- 
- 
+
 .portada {
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: #fff;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
- 
+
 .portada a {
-    color: #fff;
-    background: #6a11cb;
-    padding: 5px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s ease-in-out;
+  color: #fff;
+  background: #6a11cb;
+  padding: 5px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
 }
- 
+
 .portada a:hover {
-    background: #2575fc;
+  background: #2575fc;
 }
- 
+
 /* carrito */
 .cart {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 600px;
-    margin: 20px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 600px;
+  margin: 20px auto;
 }
- 
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
- 
-th, td {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
 }
- 
+
 th {
-    background: #ff7e5f;
-    color: white;
-    font-weight: bold;
+  background: #ff7e5f;
+  color: white;
+  font-weight: bold;
 }
- 
+
 .cart-summary {
-    margin-top: 15px;
+  margin-top: 15px;
 }
- 
+
 .cart-summary h3 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
 }
- 
+
 button {
-    background: #fc7553;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
+  background: #fc7553;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
- 
+
 button:hover {
-    background: #fc5130;
+  background: #fc5130;
 }

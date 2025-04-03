@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Menú - Pizza</title>
+    <title>Menú - Hamburguesa</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="cate.js" defer></script>
   </head>
@@ -12,66 +12,80 @@
       <ul>
         <li><a href="Home.html">Home</a></li>
         <li><a href="pizza.html">Categoría</a></li>
+        <li><a href="Carrito.html">Carrito de Compras</a></li>
         <li><a href="DevsPage.html">Nuestro Equipo</a></li>
       </ul>
     </header>
 
     <div class="main-content">
+      <header>
+        <input type="text" placeholder="Buscar categoría o menú" />
+        <span>5 artículos agotados</span>
+      </header>
+
       <nav>
         <button onclick="window.location.href='pizza.html'">Pizza</button>
-        <button onclick="window.location.href='hamburguesa.html'">
+
+        <button onclick="window.location.href='Hamburguesa.html'">
           Hamburguesa
         </button>
         <button onclick="window.location.href='perro-caliente.html'">
           Perro Caliente
         </button>
-        <button onclick="window.location.href='Snacks.html'">Snacks</button>
-        <button onclick="window.location.href='Bebidas.html'">Bebidas</button>
+        <button onclick="window.location.href='snacks.html'">Snacks</button>
+        <button onclick="window.location.href='bebidas.html'">Bebidas</button>
       </nav>
 
-      <div class="contenedorComida">
-        <ul class="listaComida"></ul>
-      </div>
-      <!-- 
       <section class="menu-items">
-        <h2>Elige tu Pizza</h2>
+        <h2>Elige tu Hamburguesa</h2>
         <div class="menu-grid">
           <div
             class="menu-item"
-            data-nombre="Pizza Margarita"
-            data-precio="8.00"
+            data-nombre="Hamburguesa Clásica"
+            data-precio="6.50"
           >
-            <img src="margarita.jpg" alt="Pizza Margarita" />
-            <h3>Pizza Margarita</h3>
-            <p>Precio: $8.00</p>
+            <img src="clasica.jpg" alt="Hamburguesa Clásica" />
+            <h3>Hamburguesa Clásica</h3>
+            <p>$6.50</p>
             <p>10 Disponibles</p>
             <button class="agregar-carrito">Agregar al carrito</button>
           </div>
           <div
             class="menu-item"
-            data-nombre="Pizza Pepperoni"
-            data-precio="9.00"
+            data-nombre="Hamburguesa con Queso"
+            data-precio="7.00"
           >
-            <img src="peperoni.png" alt="Pizza Pepperoni" />
-            <h3>Pizza Pepperoni</h3>
-            <p>Precio: $9.00</p>
-            <p>12 Disponibles</p>
+            <img src="queso.jpg" alt="Hamburguesa con Queso" />
+            <h3>Hamburguesa con Queso</h3>
+            <p>$7.00</p>
+            <p>8 Disponibles</p>
             <button class="agregar-carrito">Agregar al carrito</button>
           </div>
           <div
             class="menu-item"
-            data-nombre="Pizza Vegetariana"
-            data-precio="8.50"
+            data-nombre="Hamburguesa con Bacon"
+            data-precio="7.50"
           >
-            <img src="vegetariana.jpg" alt="Pizza Vegetariana" />
-            <h3>Pizza Vegetariana</h3>
-            <p>Precio: $8.50</p>
-            <p>8 Disponibles</p>
+            <img src="bacon.jpg" alt="Hamburguesa con Bacon" />
+            <h3>Hamburguesa con Bacon</h3>
+            <p>$7.50</p>
+            <p>5 Disponibles</p>
+            <button class="agregar-carrito">Agregar al carrito</button>
+          </div>
+          <div
+            class="menu-item"
+            data-nombre="Hamburguesa Vegana"
+            data-precio="7.00"
+          >
+            <img src="vegana.jpg" alt="Hamburguesa Vegana" />
+            <h3>Hamburguesa Vegana</h3>
+            <p>$7.00</p>
+            <p>12 Disponibles</p>
             <button class="agregar-carrito">Agregar al carrito</button>
           </div>
         </div>
       </section>
--->
+
       <section class="cart">
         <h2>Carrito de Compras</h2>
         <div class="cart-items"></div>

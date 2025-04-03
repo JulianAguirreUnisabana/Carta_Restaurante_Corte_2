@@ -28,11 +28,8 @@ ul {
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   background: white;
-  padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -41,6 +38,20 @@ header input {
   width: 300px;
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+
+header a {
+  color: hwb(0 100% 0%);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+header a:hover {
+  background: #ff7e5f;
+  color: white;
 }
 
 nav {
@@ -58,6 +69,22 @@ nav button {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
+}
+
+.mainhome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  text-align: center;
+}
+
+.mainhome .portada {
+  margin: 40px; /* Márgenes alrededor del texto */
+  padding: 30px; /* Espaciado interno adicional */
+  text-align: justify; /* Justificar el texto para mejor presentación */
 }
 
 nav button:hover {
@@ -127,11 +154,20 @@ nav button:hover {
   background: #219150;
 }
 
-img {
+/*img {
   width: 30px;
   height: 225px;
+}*/
+.imagen-portada {
+  width: 40%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 40px;
+  max-width: 40%;
+  height: auto;
+  display: block;
 }
-
 .portada {
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   color: #fff;

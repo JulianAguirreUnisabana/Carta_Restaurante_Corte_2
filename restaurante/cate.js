@@ -1,47 +1,55 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const apiUrl = "https://script.google.com/macros/s/AKfycby2w3A_fwyhb2hbwLaMoUFw5PNLnHy_8uQgvv8gBT9pJCerp-3VaLDLVu9lV8A_24Vj/exec"; // <-- Reemplaza con tu URL real
+    const apiUrl = "https://script.google.com/macros/s/AKfycby2w3A_fwyhb2hbwLaMoUFw5PNLnHy_8uQgvv8gBT9pJCerp-3VaLDLVu9lV8A_24Vj/exec";
     const listaComida = document.querySelector(".listaComida");
     const cartItemsContainer = document.querySelector(".cart-items");
     let carrito = {};
+    let productos = []; // Almacena todos los productos para filtrar
 
-    //  1. Cargar productos desde la API
+    // 1. Cargar productos desde la API
     fetch(apiUrl)
         .then(res => res.json())
         .then(data => {
-            data.data.forEach(item => {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <div class="menu-item" data-nombre="${item.Nombre}" data-precio="${item.Precio}">
-                        <img src="imagenes/${item.Nombre}.jpg" alt="${item.Nombre}" />
-                        <h3>${item.Nombre}</h3>
-                        <p>Precio: $${item.Precio}</p>
-                        <p>${item.Descripcion}</p> <!-- Cambiado a mostrar la descripción -->
-                        <button class="agregar-carrito">Agregar al carrito</button>
-                    </div>
-                `;
-                listaComida.appendChild(li);
-            });
-
-            //  Agregar eventos después de crear los botones
-            document.querySelectorAll(".agregar-carrito").forEach(button => {
-                button.addEventListener("click", function () {
-                    const item = this.closest(".menu-item");
-                    const nombre = item.dataset.nombre;
-                    const precio = parseFloat(item.dataset.precio);
-
-                    if (carrito[nombre]) {
-                        carrito[nombre].cantidad++;
-                    } else {
-                        carrito[nombre] = { nombre, precio, cantidad: 1 };
-                    }
-
-                    actualizarCarrito();
-                });
-            });
+            productos = data.data; // Guardar todos los productos
+            mostrarProductos(productos); // Mostrar todos los productos inicialmente
         })
         .catch(error => console.error("Error al cargar productos:", error));
 
-    //  Función para actualizar el carrito
+    // Función para mostrar productos en la lista
+    function mostrarProductos(productosFiltrados) {
+        listaComida.innerHTML = ""; // Limpiar la lista
+        productosFiltrados.forEach(item => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <div class="menu-item" data-nombre="${item.Nombre}" data-precio="${item.Precio}" data-categoria="${item.Categoria}">
+                    <img src="imagenes/${item.Nombre}.jpg" alt="${item.Nombre}" onerror="this.src='imagenes/default.jpg'" />
+                    <h3>${item.Nombre}</h3>
+                    <p>Precio: $${item.Precio}</p>
+                    <p>${item.Descripcion}</p>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+            `;
+            listaComida.appendChild(li);
+        });
+
+        // Agregar eventos después de crear los botones
+        document.querySelectorAll(".agregar-carrito").forEach(button => {
+            button.addEventListener("click", function () {
+                const item = this.closest(".menu-item");
+                const nombre = item.dataset.nombre;
+                const precio = parseFloat(item.dataset.precio);
+
+                if (carrito[nombre]) {
+                    carrito[nombre].cantidad++;
+                } else {
+                    carrito[nombre] = { nombre, precio, cantidad: 1 };
+                }
+
+                actualizarCarrito();
+            });
+        });
+    }
+
+    // Función para actualizar el carrito
     function actualizarCarrito() {
         cartItemsContainer.innerHTML = "";
         let subtotal = 0;
@@ -84,7 +92,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    //  3. Enviar pedido a la API (POST)
+    // Evento para filtrar productos por categoría
+    document.querySelectorAll(".filter-category").forEach(button => {
+        button.addEventListener("click", function () {
+            const categoria = this.dataset.category;
+            const productosFiltrados = productos.filter(item => item.Categoria === categoria);
+            mostrarProductos(productosFiltrados);
+        });
+    });
+
+    // 3. Enviar pedido a la API (POST)
     document.querySelector(".print-bill").addEventListener("click", () => {
         const items = Object.values(carrito).map(p => ({
             nombre: p.nombre,

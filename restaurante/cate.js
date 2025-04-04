@@ -145,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
         telefono,
         direccion,
       },
+      pedido: items,
       total: parseFloat(
         document.getElementById("total").textContent.replace("$", "")
       ),

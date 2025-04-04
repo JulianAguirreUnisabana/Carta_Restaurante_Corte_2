@@ -19,8 +19,12 @@
     <div class="main-content">
       <nav>
         <button class="filter-category" data-category="Pizza">Pizza</button>
-        <button class="filter-category" data-category="Hamburguesa">Hamburguesa</button>
-        <button class="filter-category" data-category="Perro Caliente">Perro Caliente</button>
+        <button class="filter-category" data-category="Hamburguesa">
+          Hamburguesa
+        </button>
+        <button class="filter-category" data-category="Perro Caliente">
+          Perro Caliente
+        </button>
         <button class="filter-category" data-category="Snacks">Snacks</button>
         <button class="filter-category" data-category="Bebidas">Bebidas</button>
       </nav>
@@ -33,6 +37,37 @@
       <div class="contenedorComida">
         <ul class="listaComida"></ul>
       </div>
+<<<<<<< Updated upstream
+=======
+
+      <section class="cart">
+        <h2>Carrito de Compras</h2>
+        <div class="cart-items"></div>
+        <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
+        <p><strong>Tax (10%):</strong> <span id="tax">$0.00</span></p>
+        <p><strong>Total:</strong> <span id="total">$0.00</span></p>
+
+        <h3>Información del Cliente</h3>
+        <form id="customer-info">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required />
+          <label for="telefono">Teléfono:</label>
+          <input
+            type="tel"
+            id="telefono"
+            name="telefono"
+            maxlength="10"
+            pattern="[0-9]*"
+            required
+            placeholder="Solo números"
+          />
+          <label for="direccion">Dirección:</label>
+          <input type="text" id="direccion" name="direccion" required />
+        </form>
+
+        <button class="print-bill">Enviar Pedido</button>
+      </section>
+>>>>>>> Stashed changes
     </div>
 
     <section class="cart">

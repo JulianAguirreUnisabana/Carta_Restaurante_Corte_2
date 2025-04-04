@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(res => res.json())
         .then(data => {
             productos = data.data; // Guardar todos los productos
-            mostrarProductos(productos); // Mostrar todos los productos inicialmente
+            // Mostrar por defecto la categoría "Pizza"
+            const productosPizza = productos.filter(item => item.Categoria === "Pizza");
+            mostrarProductos(productosPizza);
         })
         .catch(error => console.error("Error al cargar productos:", error));
 

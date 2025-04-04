@@ -166,8 +166,8 @@ document.addEventListener("DOMContentLoaded", function () {
         actualizarCarrito();
         document.getElementById("customer-info").reset(); // Limpiar formulario
       })
-      .catch((err) => {
-        console.error("Error al enviar pedido:", err);
+      .catch((error) => {
+        console.error("Error al enviar pedido:", error);
         alert("Hubo un problema al enviar el pedido");
       });
   });

@@ -20,6 +20,14 @@
         <header>
             <h2>Carrito de Compras</h2>
         </header>
+
+        <section class="cliente-info">
+            <h3>Datos del cliente</h3>
+            <input type="text" id="nombreCliente" placeholder="Nombre del cliente" required />
+            <input type="text" id="telefonoCliente" placeholder="Teléfono" required />
+            <input type="text" id="direccionCliente" placeholder="Dirección" required />
+        </section>
+
         <section class="cart">
             <h2>Productos en tu carrito</h2>
             <table>
@@ -32,35 +40,20 @@
                         <th>Acción</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Pizza Americana Favorita</td>
-                        <td>2</td>
-                        <td>$4.87</td>
-                        <td>$9.74</td>
-                        <td><button>Eliminar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Jugo de Naranja</td>
-                        <td>1</td>
-                        <td>$2.00</td>
-                        <td>$2.00</td>
-                        <td><button>Eliminar</button></td>
-                    </tr>
-                    <tr>
-                        <td>Papas Fritas</td>
-                        <td>3</td>
-                        <td>$2.50</td>
-                        <td>$7.50</td>
-                        <td><button>Eliminar</button></td>
-                    </tr>
+                <tbody class="cart-items">
+                    <!-- Aquí se agregan dinámicamente los productos con JS -->
                 </tbody>
             </table>
+
             <div class="cart-summary">
-                <h3>Total: $19.24</h3>
-                <button>Proceder al Pago</button>
+                <p>Subtotal: <span id="subtotal">$0.00</span></p>
+                <p>Impuesto (10%): <span id="tax">$0.00</span></p>
+                <h3>Total: <span id="total">$0.00</span></h3>
+                <button class="print-bill">Proceder al Pago</button>
             </div>
         </section>
     </div>
+
+    <script src="carrito.js"></script> <!-- Asegúrate que el nombre coincida con tu JS -->
 </body>
 </html>

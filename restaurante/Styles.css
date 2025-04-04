@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f8f8f8;
+  background-color: gainsboro;
   display: flex;
   flex-direction: column;
 }
@@ -154,10 +154,11 @@ nav button:hover {
   background: #219150;
 }
 
-/*img {
+img {
   width: 30px;
   height: 225px;
-}*/
+}
+
 .imagen-portada {
   width: 40%;
   height: auto;
@@ -245,4 +246,24 @@ button {
 
 button:hover {
   background: #fc5130;
+}
+
+.team {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.team-member {
+  text-align: center;
+  width: 30%; /* Ajusta el ancho de cada columna */
+}
+
+.team-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* Hace la imagen circular */
+  border: 3px solid #ff7e5f; /* Agrega un marco */
+  margin-bottom: 10px;
 }

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const apiUrl =
-    "https://script.google.com/macros/s/AKfycby2w3A_fwyhb2hbwLaMoUFw5PNLnHy_8uQgvv8gBT9pJCerp-3VaLDLVu9lV8A_24Vj/exec";
+    "https://script.google.com/macros/s/AKfycbwGerYF8NWBhBC9TGPRRmdSeVcE9Pg72CCoIY5-KgCVa_5i64qxi6QCaOAJSAgBRSVz/exec";
   const listaComida = document.querySelector(".listaComida");
   const cartItemsContainer = document.querySelector(".cart-items");
   const loadingElement = document.getElementById("loading");
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
       headers: {
         "Content-Type": "application/json",
       },
-      mode: "cors", // Cambia a "cors" si tu API lo permite
+      mode: "no-cors", // Cambia a "cors" si tu API lo permite
     })
       .then((res) => res.text())
       .then(() => {

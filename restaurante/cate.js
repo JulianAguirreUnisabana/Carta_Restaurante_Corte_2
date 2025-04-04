@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const li = document.createElement("li");
                 li.innerHTML = `
                     <div class="menu-item" data-nombre="${item.Nombre}" data-precio="${item.Precio}">
-                        <img src="${item.nombre}.png" alt="${item.Nombre}" />
+                        <img src="imagenes/${item.Nombre}.jpg" alt="${item.Nombre}" />
                         <h3>${item.Nombre}</h3>
                         <p>Precio: $${item.Precio}</p>
                         <p>${item.Descripcion}</p> <!-- Cambiado a mostrar la descripción -->

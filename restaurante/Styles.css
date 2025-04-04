@@ -159,7 +159,7 @@ img {
   height: 225px;
 }
 
-.imagen-portada {
+#imagen-portada {
   width: 40%;
   height: auto;
   border-radius: 10px;

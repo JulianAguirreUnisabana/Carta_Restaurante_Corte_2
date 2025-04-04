@@ -1,26 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const apiUrl = "https://script.google.com/macros/s/AKfycby2w3A_fwyhb2hbwLaMoUFw5PNLnHy_8uQgvv8gBT9pJCerp-3VaLDLVu9lV8A_24Vj/exec"; // <-- Reemplaza con tu URL real
+    const listaComida = document.querySelector(".listaComida");
     const cartItemsContainer = document.querySelector(".cart-items");
-    let carrito = {}; // Objeto para almacenar los productos agregados
+    let carrito = {};
 
-    // Evento para agregar productos al carrito
-    document.querySelectorAll(".agregar-carrito").forEach(button => {
-        button.addEventListener("click", function () {
-            const item = this.closest(".menu-item");
-            const nombre = item.dataset.nombre;
-            const precio = parseFloat(item.dataset.precio);
+    // 🔁 1. Cargar productos desde la API (GET)
+    fetch(apiUrl)
+        .then(res => res.json())
+        .then(data => {
+            data.data.forEach(item => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <div class="menu-item" data-nombre="${item.Nombre}" data-precio="${item.Precio}">
+                        <img src="${item.nombre}.png" alt="${item.Nombre}" />
+                        <h3>${item.Nombre}</h3>
+                        <p>Precio: $${item.Precio}</p>
+                        <p>${item.Stock} Disponibles</p>
+                        <button class="agregar-carrito">Agregar al carrito</button>
+                    </div>
+                `;
+                listaComida.appendChild(li);
+            });
 
-            if (carrito[nombre]) {
-                carrito[nombre].cantidad++;
-            } else {
-                carrito[nombre] = { nombre, precio, cantidad: 1 };
-            }
+            // 💡 Agregar eventos después de crear los botones
+            document.querySelectorAll(".agregar-carrito").forEach(button => {
+                button.addEventListener("click", function () {
+                    const item = this.closest(".menu-item");
+                    const nombre = item.dataset.nombre;
+                    const precio = parseFloat(item.dataset.precio);
 
-            actualizarCarrito();
-        });
-    });
+                    if (carrito[nombre]) {
+                        carrito[nombre].cantidad++;
+                    } else {
+                        carrito[nombre] = { nombre, precio, cantidad: 1 };
+                    }
 
+                    actualizarCarrito();
+                });
+            });
+        })
+        .catch(error => console.error("Error al cargar productos:", error));
+
+    // 🔄 Función para actualizar el carrito
     function actualizarCarrito() {
-        cartItemsContainer.innerHTML = ""; // Limpiar el carrito antes de actualizarlo
+        cartItemsContainer.innerHTML = "";
         let subtotal = 0;
 
         Object.values(carrito).forEach(producto => {
@@ -28,7 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
             subtotal += totalProducto;
 
             const cartItem = document.createElement("div");
-            cartItem.classList.add("cart-item");
+            cartItem.classList.add("cart-item", "item");
+            cartItem.dataset.nombre = producto.nombre;
+            cartItem.dataset.precio = producto.precio;
+            cartItem.dataset.cantidad = producto.cantidad;
+
             cartItem.innerHTML = `
                 <p>${producto.nombre} (${producto.cantidad}) - $${producto.precio.toFixed(2)} c/u</p>
                 <p>Total: $${totalProducto.toFixed(2)}</p>
@@ -37,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
             cartItemsContainer.appendChild(cartItem);
         });
 
-        // Calcular impuestos y total
         const tax = subtotal * 0.10;
         const total = subtotal + tax;
 
@@ -45,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("tax").textContent = `$${tax.toFixed(2)}`;
         document.getElementById("total").textContent = `$${total.toFixed(2)}`;
 
-        // Evento para quitar productos del carrito
         document.querySelectorAll(".quitar-item").forEach(button => {
             button.addEventListener("click", function () {
                 const nombre = this.dataset.nombre;
@@ -58,4 +83,43 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+
+    // 🧾 3. Enviar pedido a la API (POST)
+    document.querySelector(".print-bill").addEventListener("click", () => {
+        const items = Object.values(carrito).map(p => ({
+            nombre: p.nombre,
+            precio: p.precio,
+            cantidad: p.cantidad,
+        }));
+
+        if (items.length === 0) {
+            alert("Tu carrito está vacío");
+            return;
+        }
+
+        const data = {
+            pedido: items,
+            subtotal: document.getElementById("subtotal").textContent,
+            tax: document.getElementById("tax").textContent,
+            total: document.getElementById("total").textContent,
+        };
+
+        fetch(apiUrl, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(res => res.text())
+            .then(() => {
+                alert("¡Pedido enviado exitosamente!");
+                carrito = {};
+                actualizarCarrito();
+            })
+            .catch(err => {
+                console.error("Error al enviar pedido:", err);
+                alert("Hubo un problema al enviar el pedido");
+            });
+    });
 });

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const cartItemsContainer = document.querySelector(".cart-items");
     let carrito = {};
 
-    //  1. Cargar productos desde la API (GET)
+    //  1. Cargar productos desde la API
     fetch(apiUrl)
         .then(res => res.json())
         .then(data => {

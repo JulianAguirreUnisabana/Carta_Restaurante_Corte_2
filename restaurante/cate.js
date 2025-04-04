@@ -140,11 +140,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const data = {
-      cliente: {
-        nombre,
-        telefono,
-        direccion,
-      },
+      nombre: nombre,
+      telefono: telefono,
+      direccion: direccion,
       pedido: items,
       total: parseFloat(
         document.getElementById("total").textContent.replace("$", "")

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const apiUrl =
-    "https://script.google.com/macros/s/AKfycby2w3A_fwyhb2hbwLaMoUFw5PNLnHy_8uQgvv8gBT9pJCerp-3VaLDLVu9lV8A_24Vj/exec";
+    "https://script.google.com/macros/s/AKfycbwRjYeUQnXxdP54U_8ouP2ySlgzGb0GvjA4TWbEZ-BKO4yFEGi4hLgY26gz7Mh8crRR/exec";
   const listaComida = document.querySelector(".listaComida");
   const cartItemsContainer = document.querySelector(".cart-items");
   const loadingElement = document.getElementById("loading");

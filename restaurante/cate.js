@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <img src="${item.nombre}.png" alt="${item.Nombre}" />
                         <h3>${item.Nombre}</h3>
                         <p>Precio: $${item.Precio}</p>
-                        <p>${item.Stock} Disponibles</p>
+                        <p>${item.Descripcion}</p> <!-- Cambiado a mostrar la descripción -->
                         <button class="agregar-carrito">Agregar al carrito</button>
                     </div>
                 `;

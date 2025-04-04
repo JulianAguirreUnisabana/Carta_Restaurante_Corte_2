@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const cartItemsContainer = document.querySelector(".cart-items");
     let carrito = {};
 
-    // 🔁 1. Cargar productos desde la API (GET)
+    //  1. Cargar productos desde la API (GET)
     fetch(apiUrl)
         .then(res => res.json())
         .then(data => {
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 listaComida.appendChild(li);
             });
 
-            // 💡 Agregar eventos después de crear los botones
+            //  Agregar eventos después de crear los botones
             document.querySelectorAll(".agregar-carrito").forEach(button => {
                 button.addEventListener("click", function () {
                     const item = this.closest(".menu-item");
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al cargar productos:", error));
 
-    // 🔄 Función para actualizar el carrito
+    //  Función para actualizar el carrito
     function actualizarCarrito() {
         cartItemsContainer.innerHTML = "";
         let subtotal = 0;
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 🧾 3. Enviar pedido a la API (POST)
+    //  3. Enviar pedido a la API (POST)
     document.querySelector(".print-bill").addEventListener("click", () => {
         const items = Object.values(carrito).map(p => ({
             nombre: p.nombre,

@@ -268,7 +268,6 @@ button:hover {
   margin-bottom: 10px;
 }
 
-<<<<<<< Updated upstream
 .loading {
   display: flex;
   justify-content: center;
@@ -280,7 +279,7 @@ button:hover {
 
 .loading.hidden {
   display: none;
-=======
+}
 /* Estilo para la sección de información del cliente */
 #customer-info {
   background: #f9f9f9; /* Fondo claro */
@@ -323,5 +322,4 @@ button:hover {
 
 .print-bill:hover {
   background: #219150; /* Fondo más oscuro al pasar el mouse */
->>>>>>> Stashed changes
 }

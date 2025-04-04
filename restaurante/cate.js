@@ -1,31 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-<<<<<<< Updated upstream
-    const apiUrl = "https://script.google.com/macros/s/AKfycby2w3A_fwyhb2hbwLaMoUFw5PNLnHy_8uQgvv8gBT9pJCerp-3VaLDLVu9lV8A_24Vj/exec";
-    const listaComida = document.querySelector(".listaComida");
-    const cartItemsContainer = document.querySelector(".cart-items");
-    const loadingElement = document.getElementById("loading");
-    let carrito = {};
-    let productos = []; // Almacena todos los productos para filtrar
-
-    // 1. Cargar productos desde la API
-    fetch(apiUrl)
-        .then(res => res.json())
-        .then(data => {
-            productos = data.data; // Guardar todos los productos
-            // Mostrar por defecto la categoría "Pizza"
-            const productosPizza = productos.filter(item => item.Categoria === "Pizza");
-            mostrarProductos(productosPizza);
-        })
-        .catch(error => console.error("Error al cargar productos:", error))
-        .finally(() => {
-            // Ocultar la animación de carga
-            loadingElement.classList.add("hidden");
-        });
-=======
   const apiUrl =
     "https://script.google.com/macros/s/AKfycby2w3A_fwyhb2hbwLaMoUFw5PNLnHy_8uQgvv8gBT9pJCerp-3VaLDLVu9lV8A_24Vj/exec";
   const listaComida = document.querySelector(".listaComida");
   const cartItemsContainer = document.querySelector(".cart-items");
+  const loadingElement = document.getElementById("loading");
   let carrito = {};
   let productos = []; // Almacena todos los productos para filtrar
 
@@ -40,8 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       mostrarProductos(productosPizza);
     })
-    .catch((error) => console.error("Error al cargar productos:", error));
->>>>>>> Stashed changes
+    .catch((error) => console.error("Error al cargar productos:", error))
+    .finally(() => {
+      // Ocultar la animación de carga
+      loadingElement.classList.add("hidden");
+    });
 
   // Función para mostrar productos en la lista
   function mostrarProductos(productosFiltrados) {

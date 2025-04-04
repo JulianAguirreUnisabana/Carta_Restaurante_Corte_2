@@ -143,9 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
       nombre: nombre,
       telefono: telefono,
       direccion: direccion,
-      id: items.id,
-      precio: items.precio,
-      cantidad: items.cantidad,
+      items: items,
       total: parseFloat(
         document.getElementById("total").textContent.replace("$", "")
       ),

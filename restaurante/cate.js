@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
       headers: {
         "Content-Type": "application/json",
       },
-      mode: "no-cors", // Cambia a "cors" si tu API lo permite
+      mode: "cors", // Cambia a "cors" si tu API lo permite
     })
       .then((res) => res.text())
       .then(() => {

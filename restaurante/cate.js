@@ -140,12 +140,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const data = {
-      nombre: nombre,
-      telefono: telefono,
-      direccion: direccion,
-      id: items.id,
-      precio: items.precio,
-      cantidad: items.cantidad,
+      cliente: {
+        nombre,
+        telefono,
+        direccion,
+      },
       total: parseFloat(
         document.getElementById("total").textContent.replace("$", "")
       ),
@@ -157,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       headers: {
         "Content-Type": "application/json",
       },
-      mode: "no-cors", // Cambia a "cors" si tu API lo permite
+      mode: "cors", // Cambia a "cors" si tu API lo permite
     })
       .then((res) => res.text())
       .then(() => {

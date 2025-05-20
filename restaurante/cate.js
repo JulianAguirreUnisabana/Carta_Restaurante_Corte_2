@@ -121,49 +121,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 3. Enviar pedido a la API (POST)
   printBillBtn.addEventListener("click", function () {
-    // Validar formulario
-    if (!form.reportValidity()) {
-      return;
-    }
-    if (Object.keys(carrito).length === 0) {
-      alert("El carrito está vacío.");
-      return;
-    }
-
-    // Datos del cliente
-    const cliente = {
-      nombre: form.nombre.value,
+    const payload = {
+      cliente: form.nombre.value,
       telefono: form.telefono.value,
       direccion: form.direccion.value,
+      descripcion, // tu lógica para concatenar ítems
+      total: parseFloat(
+        document.getElementById("total").textContent.replace("$", "")
+      ),
     };
 
-    // Productos del carrito
-    const pedido = {
-      cliente,
-      productos: Object.values(carrito),
-      subtotal: document.getElementById("subtotal").textContent,
-      tax: document.getElementById("tax").textContent,
-      total: document.getElementById("total").textContent,
-    };
-
-    // Aquí puedes enviar el pedido a tu servidor (AJAX, fetch, etc.)
-    // Ejemplo con fetch (ajusta la URL y método según tu backend):
-    fetch("URL_DE_TU_SERVIDOR_O_GOOGLE_APPS_SCRIPT", {
+    fetch("https://render-x8ls.onrender.com/api/pedidos/", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(pedido),
-    })
-      .then((res) => {
-        if (res.ok) {
-          alert("¡Pedido enviado correctamente!");
-          carrito = {};
-          actualizarCarrito();
-          form.reset();
-        } else {
-          alert("Error al enviar el pedido.");
-        }
-      })
-      .catch(() => alert("Error al enviar el pedido."));
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt_access"),
+      },
+      body: JSON.stringify(payload),
+    });
   });
 
   document.getElementById("telefono").addEventListener("input", function (e) {

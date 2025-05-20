@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(err);
     }
   }
+  window.cargarPedidos = cargarPedidos;
 
   // Hacemos global esta función para que el onclick inline la encuentre
   window.cambiarEstado = async function (id, estadoActual) {

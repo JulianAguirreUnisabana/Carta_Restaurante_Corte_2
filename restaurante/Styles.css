@@ -374,3 +374,21 @@ button:hover {
   text-align: center;
   font-weight: bold;
 }
+
+/* pedidos */
+body {
+  font-family: sans-serif;
+}
+.pedido {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.btn {
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+#filtros {
+  margin-bottom: 15px;
+}

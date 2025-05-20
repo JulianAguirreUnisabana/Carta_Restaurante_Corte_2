@@ -8,13 +8,16 @@ loginForm.addEventListener("submit", async (e) => {
   const password = loginForm.password.value;
 
   try {
-    const response = await fetch("http://localhost:8000/api/token/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
+    const response = await fetch(
+      "https://render-x8ls.onrender.com/api/token/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
@@ -24,9 +27,8 @@ loginForm.addEventListener("submit", async (e) => {
       loginMessage.textContent = "¡Inicio de sesión exitoso!";
       loginMessage.style.color = "green";
 
-      // Aquí puedes redirigir o cargar pedidos protegidos
-      // window.location.href = 'dashboard.html';
-      // cargarPedidos();
+      // Redirige a tu página de pedidos protegida
+      window.location.href = "pedidos.html";
     } else {
       loginMessage.textContent = "Usuario o contraseña incorrectos.";
       loginMessage.style.color = "red";
@@ -37,13 +39,11 @@ loginForm.addEventListener("submit", async (e) => {
     loginMessage.style.color = "red";
   }
 });
-
-// pedidos.js
 document.addEventListener("DOMContentLoaded", cargarPedidos);
 
 function logout() {
   localStorage.removeItem("jwt_access");
-  window.location.href = "ingresar.html";
+  window.location.href = "ingresar.html"; // ajusta si tu login se llama distinto
 }
 
 async function cargarPedidos() {
@@ -58,7 +58,7 @@ async function cargarPedidos() {
     return;
   }
 
-  let url = "http://localhost:8000/api/pedidos/";
+  let url = "https://render-x8ls.onrender.com/api/pedidos/";
   const params = [];
   if (estado) params.push(`estado=${estado}`);
   if (cliente) params.push(`cliente=${cliente}`);
@@ -73,31 +73,32 @@ async function cargarPedidos() {
 
     if (response.ok) {
       const pedidos = await response.json();
+      listaPedidos.innerHTML = "";
+
       if (pedidos.length === 0) {
         listaPedidos.innerHTML = "<p>No hay pedidos.</p>";
         return;
       }
 
-      listaPedidos.innerHTML = "";
       pedidos.forEach((pedido) => {
         const div = document.createElement("div");
         div.className = "pedido";
         div.innerHTML = `
-              <strong>Pedido #${pedido.id}</strong><br>
-              Cliente: ${pedido.cliente}<br>
-              Descripción: ${pedido.descripcion}<br>
-              Total: $${pedido.total}<br>
-              Estado: ${pedido.estado}<br>
-              <button class="btn" onclick="cambiarEstado(${pedido.id}, '${
+          <strong>Pedido #${pedido.id}</strong><br>
+          Cliente: ${pedido.cliente}<br>
+          Descripción: ${pedido.descripcion}<br>
+          Total: $${pedido.total}<br>
+          Estado: ${pedido.estado}<br>
+          <button class="btn" onclick="cambiarEstado(${pedido.id}, '${
           pedido.estado
         }')">
-                ${
-                  pedido.estado === "pendiente"
-                    ? "Marcar como atendido"
-                    : "✔ Atendido"
-                }
-              </button>
-            `;
+            ${
+              pedido.estado === "pendiente"
+                ? "Marcar como atendido"
+                : "✔ Atendido"
+            }
+          </button>
+        `;
         listaPedidos.appendChild(div);
       });
     } else if (response.status === 401) {
@@ -107,23 +108,31 @@ async function cargarPedidos() {
     }
   } catch (err) {
     errorMsg.textContent = "Error de conexión.";
+    console.error(err);
   }
 }
 
 async function cambiarEstado(id, estadoActual) {
-  if (estadoActual === "atendido") return alert("Ya está atendido.");
+  if (estadoActual === "atendido") {
+    return alert("Ya está atendido.");
+  }
 
   const token = localStorage.getItem("jwt_access");
-  if (!token) return alert("No autenticado.");
+  if (!token) {
+    return alert("No autenticado.");
+  }
 
-  const response = await fetch(`http://localhost:8000/api/pedidos/${id}/`, {
-    method: "PATCH",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ estado: "atendido" }),
-  });
+  const response = await fetch(
+    `https://render-x8ls.onrender.com/api/pedidos/${id}/`,
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ estado: "atendido" }),
+    }
+  );
 
   if (response.ok) {
     alert("Estado actualizado.");

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuestro Equipo</title>
+    <link rel="stylesheet" href="Styles.css" />
+    <script src="login.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="pizza.html">Categoría</a></li>
+        <li><a href="DevsPage.html">Nuestro Equipo</a></li>
+        <li><a href="ingresar.html">Ingresar</a></li>
+      </ul>
+    </header>
+
+    <div class="main-content">
+      <div class="login-container">
+        <h2>Inicio de Sesión - Empleados</h2>
+        <form id="loginForm">
+          <label for="username">Usuario:</label>
+          <input type="text" id="username" name="username" required />
+
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" required />
+
+          <button type="submit">Iniciar Sesión</button>
+        </form>
+        <p id="loginMessage"></p>
+      </div>
+    </div>
+  </body>
+</html>

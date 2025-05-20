@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const listaComida = document.querySelector(".listaComida");
   const cartItemsContainer = document.querySelector(".cart-items");
   const loadingElement = document.getElementById("loading");
+  const form = document.getElementById("customer-info");
+  const printBillBtn = document.querySelector(".print-bill");
   let carrito = {};
   let productos = []; // Almacena todos los productos para filtrar
 
@@ -118,58 +120,50 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 3. Enviar pedido a la API (POST)
-  document.querySelector(".print-bill").addEventListener("click", () => {
-    const nombre = document.getElementById("nombre").value.trim();
-    const telefono = document.getElementById("telefono").value.trim();
-    const direccion = document.getElementById("direccion").value.trim();
-
-    if (!nombre || !telefono || !direccion) {
-      alert("Por favor, completa toda la información del cliente.");
+  printBillBtn.addEventListener("click", function () {
+    // Validar formulario
+    if (!form.reportValidity()) {
+      return;
+    }
+    if (Object.keys(carrito).length === 0) {
+      alert("El carrito está vacío.");
       return;
     }
 
-    const items = Object.values(carrito).map((p) => ({
-      id: p.nombre, // Cambiar "nombre" por "id" si tienes un identificador único
-      precio: p.precio,
-      cantidad: p.cantidad,
-    }));
-
-    if (items.length === 0) {
-      alert("Tu carrito está vacío");
-      return;
-    }
-
-    const data = {
-      cliente: {
-        nombre,
-        telefono,
-        direccion,
-      },
-      pedido: items,
-      total: parseFloat(
-        document.getElementById("total").textContent.replace("$", "")
-      ),
+    // Datos del cliente
+    const cliente = {
+      nombre: form.nombre.value,
+      telefono: form.telefono.value,
+      direccion: form.direccion.value,
     };
 
-    fetch(apiUrl, {
+    // Productos del carrito
+    const pedido = {
+      cliente,
+      productos: Object.values(carrito),
+      subtotal: document.getElementById("subtotal").textContent,
+      tax: document.getElementById("tax").textContent,
+      total: document.getElementById("total").textContent,
+    };
+
+    // Aquí puedes enviar el pedido a tu servidor (AJAX, fetch, etc.)
+    // Ejemplo con fetch (ajusta la URL y método según tu backend):
+    fetch("URL_DE_TU_SERVIDOR_O_GOOGLE_APPS_SCRIPT", {
       method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors", // Cambia a "cors" si tu API lo permite
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pedido),
     })
-      .then((res) => res.text())
-      .then(() => {
-        alert("¡Pedido enviado exitosamente!");
-        carrito = {};
-        actualizarCarrito();
-        document.getElementById("customer-info").reset(); // Limpiar formulario
+      .then((res) => {
+        if (res.ok) {
+          alert("¡Pedido enviado correctamente!");
+          carrito = {};
+          actualizarCarrito();
+          form.reset();
+        } else {
+          alert("Error al enviar el pedido.");
+        }
       })
-      .catch((error) => {
-        console.error("Error al enviar pedido:", error);
-        alert("Hubo un problema al enviar el pedido");
-      });
+      .catch(() => alert("Error al enviar el pedido."));
   });
 
   document.getElementById("telefono").addEventListener("input", function (e) {

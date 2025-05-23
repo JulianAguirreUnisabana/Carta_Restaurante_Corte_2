@@ -147,21 +147,29 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  const loading = document.getElementById("loading");
+  const container = document.querySelector(".contenedorComida .listaComida");
+
   fetch("https://render-x8ls.onrender.com/platos/")
     .then((response) => response.json())
     .then((data) => {
-      const container = document.getElementByclass("contenedorComida");
+      loading.style.display = "none"; // Oculta el indicador de carga
+
       data.forEach((plato) => {
-        const card = document.createElement("div");
+        const card = document.createElement("li");
         card.className = "card";
         card.innerHTML = `
-                    <img src="${plato.imagen}" alt="${plato.nombre}">
-                    <h3>${plato.nombre}</h3>
-                    <p><strong>Categoría:</strong> ${plato.categoria}</p>
-                    <p>${plato.descripcion}</p>
-                    <p><strong>Precio:</strong> $${plato.precio}</p>
-                `;
+          <img src="${plato.imagen}" alt="${plato.nombre}" />
+          <h3>${plato.nombre}</h3>
+          <p><strong>Categoría:</strong> ${plato.categoria}</p>
+          <p>${plato.descripcion}</p>
+          <p><strong>Precio:</strong> $${plato.precio}</p>
+        `;
         container.appendChild(card);
       });
+    })
+    .catch((error) => {
+      loading.innerHTML = "<p>Error al cargar los platos.</p>";
+      console.error("Error:", error);
     });
 });

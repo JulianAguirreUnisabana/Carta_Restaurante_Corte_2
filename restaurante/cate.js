@@ -147,22 +147,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("https://render-x8ls.onrender.com/api/platos/")
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementByclass('contenedorComida');
-            data.forEach(plato => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
+  fetch("https://render-x8ls.onrender.com/platos/")
+    .then((response) => response.json())
+    .then((data) => {
+      const container = document.getElementByclass("contenedorComida");
+      data.forEach((plato) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
                     <img src="${plato.imagen}" alt="${plato.nombre}">
                     <h3>${plato.nombre}</h3>
                     <p><strong>Categoría:</strong> ${plato.categoria}</p>
                     <p>${plato.descripcion}</p>
                     <p><strong>Precio:</strong> $${plato.precio}</p>
                 `;
-                container.appendChild(card);
-            });
-        });
+        container.appendChild(card);
+      });
+    });
 });
-

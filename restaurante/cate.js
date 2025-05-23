@@ -151,10 +151,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const container = document.querySelector(".contenedorComida .listaComida");
 
   fetch("https://render-x8ls.onrender.com/api/platos/")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Respuesta de red no fue OK");
+      }
+      return response.json();
+    })
     .then((data) => {
-      loading.style.display = "none"; // Oculta el indicador de carga
-
+      loading.style.display = "none";
       data.forEach((plato) => {
         const card = document.createElement("li");
         card.className = "card";
@@ -169,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     })
     .catch((error) => {
-      loading.innerHTML = "<p>Error al cargar los platos.</p>";
-      console.error("Error:", error);
+      loading.innerHTML = `<p>Error al cargar los platos: ${error.message}</p>`;
+      console.error("Fetch error:", error);
     });
 });

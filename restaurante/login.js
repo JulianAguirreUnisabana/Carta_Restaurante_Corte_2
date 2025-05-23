@@ -96,6 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <strong>Pedido #${pedido.id}</strong><br>
             Cliente: ${pedido.cliente}<br>
             Descripción: ${pedido.descripcion}<br>
+            Teléfono: ${pedido.telefono}<br>
+            Dirección: ${pedido.direccion}<br>
             Total: $${pedido.total}<br>
             Estado: ${pedido.estado}<br>
             <button class="btn" onclick="cambiarEstado(${pedido.id}, '${

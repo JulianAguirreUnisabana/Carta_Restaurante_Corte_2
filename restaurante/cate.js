@@ -188,10 +188,14 @@ document.addEventListener("DOMContentLoaded", function () {
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const categoria = button.getAttribute("data-category");
-      const platosFiltrados = platosGuardados.filter(
-        (plato) => plato.categoria === categoria
-      );
-      renderPlatos(platosFiltrados);
+      if (categoria === "Todos") {
+        renderPlatos(platosGuardados); // Mostrar todos
+      } else {
+        const platosFiltrados = platosGuardados.filter(
+          (plato) => plato.categoria === categoria
+        );
+        renderPlatos(platosFiltrados);
+      }
     });
   });
 });

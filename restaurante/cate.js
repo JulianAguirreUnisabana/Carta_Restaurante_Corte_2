@@ -1,52 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const apiUrl =
-    "https://script.google.com/macros/s/AKfycbwRjYeUQnXxdP54U_8ouP2ySlgzGb0GvjA4TWbEZ-BKO4yFEGi4hLgY26gz7Mh8crRR/exec";
+  const apiUrl = "https://render-x8ls.onrender.com/api/platos/";
   const listaComida = document.querySelector(".listaComida");
   const cartItemsContainer = document.querySelector(".cart-items");
   const loadingElement = document.getElementById("loading");
   const form = document.getElementById("customer-info");
   const printBillBtn = document.querySelector(".print-bill");
   let carrito = {};
-  let productos = []; // Almacena todos los productos para filtrar
+  let productos = [];
 
-  // 1. Cargar productos desde la API
+  // Cargar productos desde la API de Render
   fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => {
-      productos = data.data; // Guardar todos los productos
-      // Mostrar por defecto la categoría "Pizza"
-      const productosPizza = productos.filter(
-        (item) => item.Categoria === "Pizza"
-      );
-      mostrarProductos(productosPizza);
+      productos = data;
+      renderProductos(productos);
     })
     .catch((error) => console.error("Error al cargar productos:", error))
     .finally(() => {
-      // Ocultar la animación de carga
       loadingElement.classList.add("hidden");
     });
 
-  // Función para mostrar productos en la lista
-  function mostrarProductos(productosFiltrados) {
-    listaComida.innerHTML = ""; // Limpiar la lista
+  function renderProductos(productosFiltrados) {
+    listaComida.innerHTML = "";
     productosFiltrados.forEach((item) => {
       const li = document.createElement("li");
+      li.classList.add("menu-item"); // para estilos
       li.innerHTML = `
-                <div class="menu-item" data-nombre="${item.Nombre}" data-precio="${item.Precio}" data-categoria="${item.Categoria}">
-                    <img src="imagenes/${item.Nombre}.jpg" alt="${item.Nombre}" onerror="this.src='imagenes/default.jpg'" />
-                    <h3>${item.Nombre}</h3>
-                    <p>Precio: $${item.Precio}</p>
-                    <p>${item.Descripcion}</p>
-                    <button class="agregar-carrito">Agregar al carrito</button>
-                </div>
-            `;
+        <div data-nombre="${item.nombre}" data-precio="${
+        item.precio
+      }" data-categoria="${item.categoria}">
+          <img src="imagenes/${item.imagen || "default.jpg"}" alt="${
+        item.nombre
+      }" onerror="this.src='imagenes/default.jpg'" />
+          <h3>${item.nombre}</h3>
+          <p>Precio: $${item.precio}</p>
+          <p>${item.descripcion}</p>
+          <button class="agregar-carrito">Agregar al carrito</button>
+        </div>
+      `;
       listaComida.appendChild(li);
     });
 
-    // Agregar eventos después de crear los botones
     document.querySelectorAll(".agregar-carrito").forEach((button) => {
       button.addEventListener("click", function () {
-        const item = this.closest(".menu-item");
+        const item = this.closest("[data-nombre]");
         const nombre = item.dataset.nombre;
         const precio = parseFloat(item.dataset.precio);
 
@@ -61,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Función para actualizar el carrito
   function actualizarCarrito() {
     cartItemsContainer.innerHTML = "";
     let subtotal = 0;
@@ -72,19 +68,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const cartItem = document.createElement("div");
       cartItem.classList.add("cart-item", "item");
-      cartItem.dataset.nombre = producto.nombre;
-      cartItem.dataset.precio = producto.precio;
-      cartItem.dataset.cantidad = producto.cantidad;
-
       cartItem.innerHTML = `
-                <p>${producto.nombre} (${
-        producto.cantidad
-      }) - $${producto.precio.toFixed(2)} c/u</p>
-                <p>Total: $${totalProducto.toFixed(2)}</p>
-                <button class="quitar-item" data-nombre="${
-                  producto.nombre
-                }">Quitar</button>
-            `;
+        <p>${producto.nombre} - $${producto.precio.toFixed(2)} c/u</p>
+        <div>
+          <button class="menos" data-nombre="${producto.nombre}">-</button>
+          <span>${producto.cantidad}</span>
+          <button class="mas" data-nombre="${producto.nombre}">+</button>
+        </div>
+        <p>Total: $${totalProducto.toFixed(2)}</p>
+      `;
       cartItemsContainer.appendChild(cartItem);
     });
 
@@ -95,12 +87,20 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("tax").textContent = `$${tax.toFixed(2)}`;
     document.getElementById("total").textContent = `$${total.toFixed(2)}`;
 
-    document.querySelectorAll(".quitar-item").forEach((button) => {
-      button.addEventListener("click", function () {
+    // Eventos para botones + y -
+    document.querySelectorAll(".mas").forEach((btn) => {
+      btn.addEventListener("click", function () {
         const nombre = this.dataset.nombre;
-        if (carrito[nombre].cantidad > 1) {
-          carrito[nombre].cantidad--;
-        } else {
+        carrito[nombre].cantidad++;
+        actualizarCarrito();
+      });
+    });
+
+    document.querySelectorAll(".menos").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const nombre = this.dataset.nombre;
+        carrito[nombre].cantidad--;
+        if (carrito[nombre].cantidad <= 0) {
           delete carrito[nombre];
         }
         actualizarCarrito();
@@ -108,94 +108,76 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Evento para filtrar productos por categoría
   document.querySelectorAll(".filter-category").forEach((button) => {
     button.addEventListener("click", function () {
       const categoria = this.dataset.category;
-      const productosFiltrados = productos.filter(
-        (item) => item.Categoria === categoria
-      );
-      mostrarProductos(productosFiltrados);
+      const productosFiltrados =
+        categoria === "Todos"
+          ? productos
+          : productos.filter((item) => item.categoria === categoria);
+      renderProductos(productosFiltrados);
     });
   });
 
-  // 3. Enviar pedido a la API (POST)
   printBillBtn.addEventListener("click", function () {
+    const descripcion = Object.values(carrito)
+      .map((p) => `${p.nombre} x${p.cantidad}`)
+      .join(", ");
+
+    const total = parseFloat(
+      document.getElementById("total").textContent.replace("$", "")
+    );
+
     const payload = {
-      cliente: form.nombre.value,
-      telefono: form.telefono.value,
-      direccion: form.direccion.value,
-      descripcion, // tu lógica para concatenar ítems
-      total: parseFloat(
-        document.getElementById("total").textContent.replace("$", "")
-      ),
+      cliente: form.nombre.value.trim(),
+      telefono: form.telefono.value.trim(),
+      direccion: form.direccion.value.trim(),
+      descripcion: descripcion,
+      total: total,
     };
+
+    if (
+      !payload.cliente ||
+      !payload.direccion ||
+      total <= 0 ||
+      descripcion.length === 0
+    ) {
+      alert(
+        "Por favor completa todos los campos requeridos y agrega productos al carrito."
+      );
+      return;
+    }
 
     fetch("https://render-x8ls.onrender.com/api/pedidos/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt_access"),
+        // Aquí no enviamos token porque no quieres usarlo
       },
       body: JSON.stringify(payload),
-    });
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(
+            `No se pudo enviar el pedido. Servidor respondió: ${errorText}`
+          );
+        }
+        return response.json();
+      })
+      .then(() => {
+        alert("Pedido enviado con éxito.");
+        carrito = {};
+        actualizarCarrito();
+        form.reset();
+      })
+      .catch((error) => {
+        alert("Error al enviar el pedido: " + error.message);
+        console.error("Error detallado:", error);
+      });
   });
 
-  document.getElementById("telefono").addEventListener("input", function (e) {
-    this.value = this.value.replace(/[^0-9]/g, ""); // Elimina cualquier carácter que no sea un número
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const loading = document.getElementById("loading");
-  const container = document.querySelector(".contenedorComida .listaComida");
-  const filterButtons = document.querySelectorAll(".filter-category");
-  let platosGuardados = [];
-
-  function renderPlatos(platos) {
-    container.innerHTML = ""; // Limpiar lista actual
-    platos.forEach((plato) => {
-      const card = document.createElement("li");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="imagenes/${plato.imagen}" alt="${plato.nombre}" />
-        <h3>${plato.nombre}</h3>
-        <p><strong>Categoría:</strong> ${plato.categoria}</p>
-        <p>${plato.descripcion}</p>
-        <p><strong>Precio:</strong> $${plato.precio}</p>
-      `;
-      container.appendChild(card);
-    });
-  }
-
-  fetch("https://render-x8ls.onrender.com/api/platos/")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Respuesta de red no fue OK");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      loading.style.display = "none";
-      platosGuardados = data;
-      renderPlatos(platosGuardados);
-    })
-    .catch((error) => {
-      loading.innerHTML = `<p>Error al cargar los platos: ${error.message}</p>`;
-      console.error("Fetch error:", error);
-    });
-
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const categoria = button.getAttribute("data-category");
-      if (categoria === "Todos") {
-        renderPlatos(platosGuardados); // Mostrar todos
-      } else {
-        const platosFiltrados = platosGuardados.filter(
-          (plato) => plato.categoria === categoria
-        );
-        renderPlatos(platosFiltrados);
-      }
-    });
+  document.getElementById("telefono").addEventListener("input", function () {
+    this.value = this.value.replace(/[^0-9]/g, "");
   });
 });

@@ -149,6 +149,24 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const loading = document.getElementById("loading");
   const container = document.querySelector(".contenedorComida .listaComida");
+  const filterButtons = document.querySelectorAll(".filter-category");
+  let platosGuardados = [];
+
+  function renderPlatos(platos) {
+    container.innerHTML = ""; // Limpiar lista actual
+    platos.forEach((plato) => {
+      const card = document.createElement("li");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="imagenes/${plato.imagen}" alt="${plato.nombre}" />
+        <h3>${plato.nombre}</h3>
+        <p><strong>Categoría:</strong> ${plato.categoria}</p>
+        <p>${plato.descripcion}</p>
+        <p><strong>Precio:</strong> $${plato.precio}</p>
+      `;
+      container.appendChild(card);
+    });
+  }
 
   fetch("https://render-x8ls.onrender.com/api/platos/")
     .then((response) => {
@@ -159,21 +177,21 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then((data) => {
       loading.style.display = "none";
-      data.forEach((plato) => {
-        const card = document.createElement("li");
-        card.className = "card";
-        card.innerHTML = `
-          <img src="${plato.imagen}" alt="${plato.nombre}" />
-          <h3>${plato.nombre}</h3>
-          <p><strong>Categoría:</strong> ${plato.categoria}</p>
-          <p>${plato.descripcion}</p>
-          <p><strong>Precio:</strong> $${plato.precio}</p>
-        `;
-        container.appendChild(card);
-      });
+      platosGuardados = data;
+      renderPlatos(platosGuardados);
     })
     .catch((error) => {
       loading.innerHTML = `<p>Error al cargar los platos: ${error.message}</p>`;
       console.error("Fetch error:", error);
     });
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const categoria = button.getAttribute("data-category");
+      const platosFiltrados = platosGuardados.filter(
+        (plato) => plato.categoria === categoria
+      );
+      renderPlatos(platosFiltrados);
+    });
+  });
 });

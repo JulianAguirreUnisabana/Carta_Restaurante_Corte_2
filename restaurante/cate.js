@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loading = document.getElementById("loading");
   const container = document.querySelector(".contenedorComida .listaComida");
 
-  fetch("https://render-x8ls.onrender.com/platos/")
+  fetch("https://render-x8ls.onrender.com/api/platos/")
     .then((response) => response.json())
     .then((data) => {
       loading.style.display = "none"; // Oculta el indicador de carga

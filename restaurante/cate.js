@@ -145,3 +145,24 @@ document.addEventListener("DOMContentLoaded", function () {
     this.value = this.value.replace(/[^0-9]/g, ""); // Elimina cualquier carácter que no sea un número
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("https://render-x8ls.onrender.com/api/platos/")
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementByclass('contenedorComida');
+            data.forEach(plato => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${plato.imagen}" alt="${plato.nombre}">
+                    <h3>${plato.nombre}</h3>
+                    <p><strong>Categoría:</strong> ${plato.categoria}</p>
+                    <p>${plato.descripcion}</p>
+                    <p><strong>Precio:</strong> $${plato.precio}</p>
+                `;
+                container.appendChild(card);
+            });
+        });
+});
+
